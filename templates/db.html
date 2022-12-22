@@ -1,0 +1,53 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container-fluid">
+    <h3 class="mt-4">DB 연결</h2>
+    {% if login == 1 %}
+    <p class="mt-4">
+        이미 데이터베이스가 연결되어 있습니다.
+    </p>
+    <a class="nav-link" href="{% url 'undb' %}">DB 해제</a>
+                
+    {% else %}
+    <p class="mt-4">
+        데이터베이스 정보를 입력하세요.
+    </p>
+    <form action="{% url 'db' %}" method="post" id="frm" class="w-50">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Host</label>
+            <div class="col-sm-10">
+              <input type="text" class="inp w-100" id="host" name="host" placeholder="localhost">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputUser" class="col-sm-2 col-form-label">User</label>
+            <div class="col-sm-10">
+                <input type="text" class="inp w-100" id="user" name="user" placeholder="root">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputPort" class="col-sm-2 col-form-label">Port</label>
+            <div class="col-sm-10">
+                <input type="int" class="inp w-100" id="port" name="port" placeholder="8000">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-10">
+              <input type="password" class="inp w-100" id="passwd" name="passwd" placeholder="Password">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputDB" class="col-sm-2 col-form-label">DB name</label>
+            <div class="col-sm-10">
+                <input type="text" class="inp w-100" id="db" name="db" placeholder="DB_FINAL">
+            </div>
+        </div>
+        <!-- <a class="nav-link" type="submit" id="connect">연결</a> -->
+        <!-- <input type="submit" value="연결" class="btn btn-secondary mb-5"> -->
+        <button type="submit" class="btn btn-link">연결</button>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

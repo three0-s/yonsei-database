@@ -1,0 +1,79 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container-fluid">
+    <h4 class="mb-3 mt-5">다중 결합</h4>
+    <h6 class="mb-3 mt-3">선택한 테이블</h6>
+    <form method="post" action="{% url 'multijoin_start' %}">{% csrf_token %}
+    
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">테이블 명</th>
+            <th scope="col">레코드 수</th>
+            <th scope="col">대표 속성</th>
+            <th scope="col">대표 결합키</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for tuples in chosen_tables %}
+          <tr>
+          {% for data in tuples %}
+            {% if forloop.last %}
+            <td>{{rkey}}</td>
+            <input type="hidden" name="rkey" value={{rkey}}>
+            {% elif forloop.first %}
+            <td>{{data}}</td>
+            <input type="hidden" name="table_name" value={{data}}>
+            {% elif forloop.counter == 3 %}
+            <td><select class="custom-select mr-sm-2" id="rprop" name="rprop">
+              {% for key in data %}
+                <option value={{key}}>{{key}}</option>
+              {% endfor %}
+            </select></td>
+            {% else %}
+            <td>{{data}}</td>
+            {% endif %}
+          {% endfor %}
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h6 class="mb-3 mt-5">결합 가능 테이블 목록</h6>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">선택</th>
+            <th scope="col">테이블 명</th>
+            <th scope="col">레코드 수</th>
+            <th scope="col">대표 속성</th>
+            <th scope="col">대표 결합키</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for tuples in total_tables %}
+          <tr>
+          
+          {% for data in tuples %} 
+            {% if forloop.first %}
+              <td><input class="check-input" type="checkbox" value={{data}} name="join[]"></td>  
+              <td>{{data}}</td>
+            {% elif forloop.counter == 3 %}
+              <td><select class="custom-select mr-sm-2" id="rprop" name="rprop">
+                {% for key in data %}
+                  <option value={{key}}>{{key}}</option>
+                {% endfor %}
+              </select></td>
+            {% else %}
+              <td>{{data}}</td>
+            {% endif %}
+          {% endfor %}
+          </tr>
+        {% endfor %}
+        </tbody> 
+    </table>
+    
+    <button type="submit" class="btn btn-link mb-2">결합 시작</button>
+    </form>
+  </div>
+  <code>{{table_list}}</code>
+{% endblock %}

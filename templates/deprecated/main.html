@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% if is_db %}
+    <button><a href="{% url 'undb' %}">DB 해제</a></button>
+    <button><a href="{% url 'csv' %}">데이터 추가</a></button>
+    <button><a href="{% url 'scan' %}">테이블 조회</a></button>
+    <button><a href="{% url 'modify' %}">테이블 수정</a></button>
+    <h5 style="float: right; color:green">DB ON</h5>
+    {% else %}
+    <button><a href="{% url 'db' %}">DB 등록</a></button>
+    <h5 style="float: right; color:red">DB OFF</h5>
+    {% endif %}
+</body>
+</html>

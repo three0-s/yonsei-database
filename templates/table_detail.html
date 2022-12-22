@@ -1,0 +1,94 @@
+{% extends 'index.html' %}
+{% block content %}
+<body>
+    <div>
+        <button class="btn btn-link"><a href="{% url 'scan' %}">목록으로</a></button>
+    </div>
+    <br>
+    {% if not table.scan %}
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" value="스캔" class="btn btn-link">
+        </form>
+    </div>
+    {% endif %}
+    <br>
+    <br>
+    {% if numeric %}
+    <div style="overflow:auto; width:auto; height:auto;">
+        <table style="table-layout:fixed;text-align: center;">
+            <thead>
+                <tr>
+                    <th colspan="2">속성명</th>
+                    <th colspan="2">데이터 타입</th>
+                    <th colspan="2">Null 레코드 수</th>
+                    <th colspan="2">Null 레코드 비율</th>
+                    <th colspan="2">상이 수치 값</th>
+                    <th colspan="2">최댓값</th>
+                    <th colspan="2">최솟값</th>
+                    <th colspan="2">0 레코드 수</th>
+                    <th colspan="2">0 레코드 비율</th>
+                    <th colspan="2">대표 속성</th>
+                    <th colspan="2">결합키 후보</th>
+                    <th colspan="2">대표 결합키</th>
+<!--                    <th colspan="2">Extra</th>-->
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in numeric %}
+                <tr>
+                    {% for col in row %}
+                    <td colspan="2" style="overflow:auto;">{{ col }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div>
+            <button class="btn btn-link">
+                <a href="{% url 'download_num' table.id %}" style="text-decoration: none; color: inherit;">수치 속성 스캔 결과 내려받기</a>
+            </button>
+        </div>
+    </div>
+    {% endif %}
+    <br>
+    <br>
+    <br>
+    {% if categorical %}
+    <div style="overflow:auto; width:auto; height:auto;">
+        <table style="table-layout:fixed;text-align: center;">
+            <thead>
+                <tr>
+                    <th colspan="2">속성명</th>
+                    <th colspan="2">데이터 타입</th>
+                    <th colspan="2">Null 레코드 수</th>
+                    <th colspan="2">Null 레코드 비율</th>
+                    <th colspan="2">상이 범주값</th>
+                    <th colspan="2">특수문자 포함 레코드 수</th>
+                    <th colspan="2">특수문자 포함 레코드 비율</th>
+                    <th colspan="2">대표 속성</th>
+                    <th colspan="2">결합키 후보</th>
+                    <th colspan="2">대표 결합키</th>
+<!--                    <th colspan="2">Extra</th>-->
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in categorical %}
+                <tr>
+                    {% for col in row %}
+                    <td colspan="2" style="overflow:auto;">{{ col }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div>
+            <button class="btn btn-link">
+                <a href="{% url 'download_cat' table.id  %}" style="text-decoration: none; color: inherit;">범주 속성 스캔 결과 내려받기</a>
+            </button>
+        </div>
+    </div>
+    {% endif %}
+</body>
+{% endblock %}

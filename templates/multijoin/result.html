@@ -1,0 +1,10 @@
+
+{% extends 'index.html' %}
+{% block content %}
+{% if success %}
+<p> join success! </p>
+{% else %}
+<p> join failed! {{msg}}</p>
+{% endif %}
+{% endblock %}
+
